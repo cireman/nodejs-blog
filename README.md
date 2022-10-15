@@ -3,12 +3,12 @@
 - Express
 - PostgresSQL
 - Sequelize ORM
-- Autenticacion con Tokens
-- Bcrypt para hashear contraseña
-- Uso de Json Web Token
+- Token Authentication
+- Password hashing with Bcryptjs
+- Json Web Token (JWT)
 
-- Rutas de Login y creacion de usuario (register)
-- Herramienta para publicar imagenes de perfil
-- CRUD de usuarios con autenticacion y manejo de permisos
+- Login route y user creation (register)
+- Tool to upload image profiles
+- CRUD for users with authentication and permission handling
 - /users/:id DELETE, PUT
 - /users/me
