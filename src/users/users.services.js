@@ -1,4 +1,3 @@
-const { json } = require('sequelize')
 const usersControllers = require('./users.controllers')
 
 
@@ -30,12 +29,12 @@ const registerUser = (req, res) => {
     //* Ejecutamos el controller
     usersControllers.createUser({
       firstName, lastName, email, password, phone, birthday, gender, country
-    })
+  })
       .then(response => {
-        res.status(200).json(response)
+        res.status(201).json(response)
       })
       .catch(err => {
-        res.status(400).json({message: err.message})
+        res.status(400).json(err.message)
       })
   } else {
     //* Error cuando no mandan todos los datos necesarios para crear un usuario

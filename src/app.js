@@ -8,6 +8,8 @@ const {port} = require('./config')
 
 //* Routes
 const userRouter = require('./users/users.router')
+const authRouter = require('./auth/auth.router')
+
 
 //? Initial configs
 const app = express()
@@ -38,7 +40,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1/users', userRouter)
- 
+app.use('/api/v1/auth', authRouter) 
+
 /*
 *app.post('/hola', async (req, res) => {
 *  try {
