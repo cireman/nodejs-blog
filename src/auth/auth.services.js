@@ -1,5 +1,6 @@
 const {loginUser} = require('./auth.controller')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { jwtSecret } = require('../config');
 
 const login = (req, res) => {
   const {email, password} = req.body;
@@ -14,7 +15,7 @@ const login = (req, res) => {
               id: response.id,
               email: response.email,
               role: response.role
-            }, 'academlo')
+            }, jwtSecret)
             res.status(200).json({message: 'Correct Credentials', token})
         } else {
           res.status(401).json({message: 'Invalid Credentials'})

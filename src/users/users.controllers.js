@@ -12,7 +12,7 @@ const getAllUsers = async () => {
 const getUserById = async (id) => {
   const data = await Users.findOne({
     where: {
-      id:id
+      id: id
     }
   })
   return data

@@ -11,14 +11,14 @@ const getAllUsers = (req, res) => {
     })
 }
 
-const getUSerById = (req, res) => {
+const getUserById = (req, res) => {
   const id = req.params.id
   usersControllers.getUserById(id)
     .then((response) => {
       res.status(200).json(response)
     })
     .catch(err => {
-      res.status(400).json({message: err.message})
+      res.status(404).json({message: err.message})
     })
 }
 
@@ -83,7 +83,7 @@ const deleteUser = (req, res) => {
 
 module.exports = {
   getAllUsers,
-  getUSerById,
+  getUserById,
   registerUser,
   pathUser,
   deleteUser
