@@ -81,10 +81,25 @@ const deleteUser = (req, res) => {
     })
 }
 
+//? My user services
+const getMyUser = (req, res) => {
+  const id = req.user.id //? req.user contiene la informacion del token desencriptado
+  
+  usersControllers.getUserById(id)
+    .then(response => {
+        res.status(200).json(response)
+    })
+    .catch(err => {
+      res.status(400).json({message: err.message})
+    })
+}
+
+
 module.exports = {
   getAllUsers,
   getUserById,
   registerUser,
   pathUser,
-  deleteUser
+  deleteUser,
+  getMyUser
 }

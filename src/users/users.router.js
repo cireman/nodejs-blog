@@ -12,12 +12,23 @@ router.get('/', passport.authenticate('jwt', {session: false}), userServices.get
 
 //TODO el registerUSer ira en la ruta /auth/register
 
+//?Ruta de informacion que solo el usuario loggeado puede user
+router.route('/me')
+  .get(passport.authenticate('jwt', {session: false}), 
+  userServices.getMyUser)
+  // .patch()
+  // .delete()
+
 //? Rutas dinamicas por ID
 //? Esta es una opcion mas ordenada
+//? /api/v1/users/:id
 router.route('/:id')
   .get(userServices.getUserById)
   .patch(userServices.pathUser)
   .delete(userServices.deleteUser)
+
+
+
 
 /*
 ? Este es una opcion para rutas dinamicas por ahi
