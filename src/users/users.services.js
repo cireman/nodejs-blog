@@ -94,6 +94,35 @@ const getMyUser = (req, res) => {
     })
 }
 
+// TODO Crear rutas protegidas /me, con los verbos para update y delete.
+const patchMyUser = (req, res) => {
+  const id = req.user.id;
+  const {firstName, lastName, phone, birthday, gender, country} = req.body;
+
+  usersControllers.updateUser(id, {firstName, lastName, phone, birthday, gender, country})
+    .then(response => {
+      res.status(200).json({message: 'Your user was edited succesfully!'})
+    })
+    .catch(err => {
+      res.status(400).json({message: err.message})
+    })
+}
+
+//? 2 tipos de delete:
+//* 1: por administrador
+//* 2: por el usuario
+
+const deleteMyUser = (req, res) => {
+  const id = req.user.id
+
+  usersControllers.updateUser(id, {status: 'inactive'})
+    .then(() => {
+      res.status(200).json({message: `Your user was deleted succesfully`})
+    })
+    .catch(err => {
+      res.status(400).json({message: err.message})
+    })
+}
 
 module.exports = {
   getAllUsers,
