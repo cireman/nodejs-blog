@@ -130,5 +130,7 @@ module.exports = {
   registerUser,
   pathUser,
   deleteUser,
-  getMyUser
+  getMyUser,
+  deleteMyUser,
+  patchMyUser
 }

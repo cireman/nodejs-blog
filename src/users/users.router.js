@@ -1,5 +1,5 @@
 const router = require('express').Router()
-
+const adminValidate = require('../middlewares/role.middleware')
 const passport = require('passport')
 const userServices = require('./users.services')
 
@@ -15,17 +15,29 @@ router.get('/', passport.authenticate('jwt', {session: false}), userServices.get
 //?Ruta de informacion que solo el usuario loggeado puede user
 router.route('/me')
   .get(passport.authenticate('jwt', {session: false}), 
-  userServices.getMyUser)
-  // .patch()
-  // .delete()
+  userServices.getMyUser
+  )
+  .patch(
+    passport.authenticate('jwt', {session: false}),
+    userServices.patchMyUser
+  )
+  .delete(
+    passport.authenticate('jwt', {session: false}),
+    userServices.deleteMyUser
+  )
 
 //? Rutas dinamicas por ID
 //? Esta es una opcion mas ordenada
 //? /api/v1/users/:id
 router.route('/:id')
   .get(userServices.getUserById)
-  .patch(userServices.pathUser)
-  .delete(userServices.deleteUser)
+  .patch(
+    passport.authenticate('jwt', {session: false}),
+    adminValidate,
+    userServices.pathUser)
+  .delete(
+    passport.authenticate('jwt', {session: false}),
+    userServices.deleteUser)
 
 
 
