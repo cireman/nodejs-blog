@@ -37,6 +37,7 @@ json
 
 ````
 /api/v1
+
         - /users
             - /me
             - /me/posts
