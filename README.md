@@ -12,7 +12,7 @@
     - Create categories
 
 ```
-json
+- json
     {
         "total": 68,
         "prev": "localhost:9000/api/v1/posts?start=51&limit=60",
