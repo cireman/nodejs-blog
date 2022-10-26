@@ -36,7 +36,7 @@ json
     }
 
 ```
-/api/v1
+- /api/v1
 
         - /users
             - /me
