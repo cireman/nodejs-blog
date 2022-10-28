@@ -11,15 +11,17 @@ const getAllPosts = (req, res) => {
   //? limit: cantidad maxima de entidades a mostrar por pagina
 
   const urlBase = `${host}/api/v1/posts`
-
+  
   postControllers.getAllPosts(offset, limit)
-    .then(response => {
-      res.status(200).json({
-        next: `${urlBase}?offset=${offset + limit}&limit=${limit}`,
+  .then(response => {
+    const nextPage = response.count - offset >= limit ? `${urlBase}?offset=${offset + limit}&limit=${limit}` : null
+    res.status(200).json({
+        next: nextPage,
         prev: `${urlBase}`,
+        items: response.count,
         offset,
         limit,
-        results: response
+        results: response.rows
       })
     })
     .catch(err => {
