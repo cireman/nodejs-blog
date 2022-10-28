@@ -1,15 +1,64 @@
 const Posts = require('../models/posts.models')
+const Users = require('../models/users.models')
+const Categories = require('../models/categories.models')
+
 const uuid = require('uuid')
 
 const getAllPosts = async() => {
-  const data = await Posts.findAll()
+  const data = await Posts.findAll({
+    include: [
+      {
+        model: Users,
+        as: 'user',
+        attributes: ['id','firstName', 'email']
+      },
+      {
+        model: Categories,
+        as: 'category',
+        attributes: {
+          exclude: ['id']
+        }
+      }
+    ],
+    attributes: {
+      exclude: ['createdAt', 'updatedAt', 'categoryId', 'userId']
+    }
+  })
   return data
 }
+
+//La tabla pibote recibe un join y luego hace join en el otro extremos:
+// Posts -> PostsCategories -> Categories 
+//* Posts.findAll({
+//*   include: [{
+//*     model: postCategories,
+//*     include: [{
+//*       model: Categories
+//*     }]
+//*   }]
+//* })
 
 const getPostsById = async(id) => {
   const data = await Posts.findOne({
     where: {
       id
+    },
+    include: [
+      {
+        model: Users,
+        as: 'user',
+        attributes: ['id','firstName', 'email'],
+      },
+      {
+        model: Categories,
+        as: 'category',
+        attributes: {
+          exclude: ['id']
+        }
+      }
+    ],
+    attributes: {
+      exclude: ['createdAt', 'updatedAt', 'categoryId']
     }
   })
   return data
@@ -20,15 +69,27 @@ const createPost = async(data) => {
     id: uuid.v4(),
     title: data.title,
     content: data.content,
-    createdBy: data.userId, //* Este es el user id que viene desde el token del usuario
+    userId: data.userId, //* Este es el user id que viene desde el token del usuario
     categoryId: data.categoryId
   })
   return assigData
 }
 
+const getPostsByCategory = async(categoryId) => {
+  const data = await Posts.findAll({
+    where: {
+      categoryId
+    },
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    }
+  })
+  return data
+}
+
 module.exports = {
   getAllPosts,
   getPostsById,
-  createPost
-
+  createPost,
+  getPostsByCategory
 }
