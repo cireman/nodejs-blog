@@ -4,8 +4,10 @@ const Categories = require('../models/categories.models')
 
 const uuid = require('uuid')
 
-const getAllPosts = async() => {
+const getAllPosts = async(offset, limit) => {
   const data = await Posts.findAll({
+    offset: offset ? offset : 0,
+    limit: limit ? limit : 10,
     include: [
       {
         model: Users,

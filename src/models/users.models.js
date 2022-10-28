@@ -39,7 +39,7 @@ const Users = db.define('users', {
     type: DataTypes.DATEONLY,
     allowNull: false,
   },
-  genre: {
+  gender: {
     type: DataTypes.STRING,
   },
   role: {
